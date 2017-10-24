@@ -1,0 +1,234 @@
+﻿<div ng-controller="CreateSiteCtrl as msCtrl" class="customer-register">
+    <!--Site Details Start-->
+    <form name="add_sitedetail_form" ng-submit="msCtrl.updateSiteDetails(add_sitedetail_form.$valid)" novalidate>
+        <div id="site-details-tab">
+            <div class="bc-panel-white m-b-none">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Select Customer<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select ng-model="msCtrl.customerAttribute"
+                                    name="customer"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-options="item.CustomerName for item in msCtrl.customerList track by item.CustomerId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Site Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" ng-model="msCtrl.attributes.SiteName" ng-minlength="2" ng-maxlength="50" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>PO #<span class="text-danger">*</span></label>
+                            <input type="text" name="PONum" class="form-control" ng-model="msCtrl.attributes.PoNumber" ng-minlength="10" ng-maxlength="10" min="0" ng-pattern="/^[a-zA-Z0-9]+$/" required>
+                            <span style="color:red" ng-show="add_sitedetail_form.PONum.$error.pattern">Only Alphanumeric values allowed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Site Details<span class="text-danger">*</span></label>
+                            <textarea class="form-control" ng-model="msCtrl.attributes.SiteDetail" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Fuel Included </label>
+                            <ul class="list-inline">
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input icheck type="radio" ng-model="msCtrl.attributes.FuelIncluded" ng-value="true" name="fuel" class="i-checks"> Yes </label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label> <input icheck type="radio" name="fuel" ng-model="msCtrl.attributes.FuelIncluded" ng-value="false" class="i-checks"> No </label></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Tolls Included </label>
+                            <ul class="list-inline">
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input icheck ng-model="msCtrl.attributes.TollsIncluded" ng-value="true" type="radio" name="toll" class="i-checks"> Yes </label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label> <input icheck type="radio" ng-model="msCtrl.attributes.TollsIncluded" ng-value="false" name="toll" class="i-checks"> No </label></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Credit Terms Agreed<span class="text-danger">*</span></label>
+                            <select ng-model="msCtrl.attributes.CreditTermAgreed" name="customer" class="form-control" ng-required="true" ng-options="item for item in msCtrl.CreditTermAgreedList" required>
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 p-r0 wid-ten">
+                        <div class="form-group">
+                            <label>Attachment </label>
+                            <span class="input-group-btn">
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                    <span class="image-preview-input-title">Choose File</span>
+                                    <input type="file" ngf-select ng-model="picFile" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ngf-max-size="2MB" ngf-model-invalid="errorFile" class="btn btn-default" id="inputFileToLoad" ng-change="msCtrl.loadImageFileAsURL();"><!-- rename it -->
+                                </div>
+                            </span>
+                            <!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                    <div class="col-md-3 p-l0"><span class="filename"><b>{{msCtrl.filesSelected[0].name}}</b></span></div>
+                </div>
+                <div class="bc-panel-light-grey m-b-none">
+                    <h3 class="sub-title">Supervisor Details</h3>
+                    <div ng-if="msCtrl.supervisorError">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger col-md-9">
+                                    <strong>Required!</strong> All supervisor fields.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Supervisor Name</label>
+                                <input type="text" ng-model="msCtrl.supervisorRow.supervisorName" class="form-control" ng-minlength="2" ng-maxlength="30">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Supervisor Email</label>
+                                <input type="Email" ng-model="msCtrl.supervisorRow.supervisorEmail" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Supervisor Mobile No.</label>
+                                <input type="number" ng-model="msCtrl.supervisorRow.supervisorMobile" class="form-control only-float" minlength="10" maxlength="10" min="0">
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12 text-right m-t-sm">
+                            <div class="form-group add-btn">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-i" title="Add Supervisor" ng-click="msCtrl.addSupervisorRow()"><i class="fa fa-plus"></i> Add Supervisor</a>
+                               
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12" ng-if="msCtrl.supervisors.length>0">
+                            <div class="grid-tb-panel">
+                                <table class="table table-stripped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Supervisor Name</th>
+                                            <th>Supervisor Email</th>
+                                            <th>Supervisor Mobile No.</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="supervisor in msCtrl.supervisors">
+                                        <td>{{supervisor.SupervisorName }}</td>
+                                        <td>{{ supervisor.SupervisorEmail }}</td>
+                                        <td class="text-center">{{ supervisor.SupervisorMobile }}</td>
+                                        <td><a type="button" href="javascript:void(0);" ng-click="msCtrl.removeSupervisorRow($index);" title="Delete"><i class="fa pe-7s-trash"></i></a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+              
+            <div class="bc-panel-light-grey m-b-none">
+                <h3 class="sub-title">Gate Details</h3>
+                <div ng-if="msCtrl.gateError">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger col-md-9">
+                                <strong>Required!</strong> All gate fields.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Gate Number</label>
+                            <input type="text" class="form-control only-float" ng-model="msCtrl.gateRow.gateNumber" ng-minlength="2" ng-maxlength="10" min="0">
+                        </div>
+                    </div>                    
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Tip Off Rate</label>
+                            <div class="input-group date">
+                                <span class="input-group-addon">
+                                    <span class="fa fa-usd"></span>
+                                </span>
+                                <input type="number" name="TipOffRate" class="form-control only-float" ng-model="msCtrl.gateRow.tipOffRate" ng-pattern="/^([0-9]{1,5})(([.]{1})([0-9]{1,2}))?$/" min="0">
+                            </div>
+                            <div ng-if="add_sitedetail_form.TipOffRate.$invalid && !add_sitedetail_form.TipOffRate.$pristine">
+                                <span class="has-error"> This field is invalid.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Tipping Site</label>
+                            <input type="text" class="form-control" ng-model="msCtrl.gateRow.tippingSite" ng-minlength="2" ng-maxlength="30">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right m-t-sm">
+                        <div class="form-group add-btn">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-i" title="Add Gate" ng-click="msCtrl.addGateRow()"><i class="fa fa-plus"></i>Add Gate</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">                  
+                    <div class="col-md-12" ng-if="msCtrl.gates.length>0">
+                        <div class="grid-tb-panel">
+                            <table class="table table-stripped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Gate Number</th>
+                                        <th>Tip Off Rate</th>
+                                        <th>Tipping Site</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="gate in msCtrl.gates">
+                                    <td>{{ gate.GateNumber }}</td>
+                                    <td>{{ gate.TipOffRate }}</td>
+                                    <td class="text-center">{{gate.TippingSite }}</td>
+                                    <td><a type="button" href="javascript:void(0);" ng-click="msCtrl.removeGateRow($index);" title="Delete"><i class="fa pe-7s-trash"></i></a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>                 
+                </div>
+             
+            </div>            
+            <div class="panel-footer text-right bc-panel-footer">
+                <button class="btn btn-default" ng-click="msCtrl.cancel();" title="Cancel">Cancel</button>
+                <button class="btn btn-primary" type="submit" title="Save" ng-disabled="add_sitedetail_form.invalid">Save</button>
+            </div>
+        </div>
+    </form>
+    <!--Site Details End-->
+</div>

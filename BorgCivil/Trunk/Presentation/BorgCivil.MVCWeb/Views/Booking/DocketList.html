@@ -1,0 +1,28 @@
+﻿<div class="animate-panel bookinglist" ng-controller="DocketViewCtrl as dvCtrl">    
+    
+    <!--Docket Content-->
+    <div>
+        <div id="grid"
+             ui-grid="dvCtrl.uiGrid"            
+             ui-grid-move-columns
+             ui-grid-pagination
+             ui-grid-resize-columns
+             ui.grid.autoResize
+             external-scopes="clickHandler"
+             class="grid">
+            <div class="watermark" ng-show="!dvCtrl.uiGrid.data.length">No records found</div>
+        </div>
+    </div>
+
+    <!-- Docket Content End-->
+   
+    <!--Pending Details Content End-->
+   
+</div>   
+   
+   
+    
+    
+    
+   
+    

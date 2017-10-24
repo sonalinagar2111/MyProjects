@@ -1,0 +1,59 @@
+<!-- JS -->
+<script type="text/javascript" src="popup.js"></script>
+
+<!-- CSS -->
+<style type="text/css">
+	.search-form label{
+		padding: 7px 0;
+		text-align: left !important;
+		float: left; 
+	}
+
+	button{
+		cursor:pointer;
+		background-color:#0084bf;
+		padding:6px 20px 6px 20px;
+		display:inline-block;color:#fff;
+		border:none;border-radius:2px;
+		font-size:12px;
+		float: left;
+	}
+
+	button:hover{
+		background-color:#0073b1;
+	}
+	p, h3{
+		text-align: left;
+	}
+</style>
+
+<!-- HTML -->
+	<div class="search-form" 
+		style="width:300;
+				height: 80;
+				text-align:center;
+				font-family:arial
+				background-color: #ffffff;"
+		align="center">
+
+		<label>Search book by name</label>
+		<input type="text" 
+				name="search" 
+				id="search" 
+				style="width:70%;
+						border: solid 1px #ccc;
+					    padding: 5px;
+					    float: left;"><br>
+	    <p id="searchErrorMsg" 
+	    	style="color:red; display: none;">
+	    	Invalid input entry
+	    </p>
+		
+	    <button id="runButton">Search</button>	  
+	    
+	</div>
+	<hr>
+	<span id="searchResult" class="search-form"></span>
+
+	
+

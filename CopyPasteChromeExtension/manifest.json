@@ -1,0 +1,24 @@
+{
+  "name": "Copy Paste",
+  "short_name": "Copy Paste",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Scrape data to new form",   
+  "permissions": ["tabs",
+      "*://*/*", "file:///*",       
+      "clipboardRead",
+      "clipboardWrite"],
+  "content_scripts": [
+    { 
+      "matches": ["*://*/*", "file:///*"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_action": {
+       "default_icon": {
+          "19": "icon.png",
+          "38": "icon.png"
+        },
+        "default_title": "Copy Paste"        
+    }
+}

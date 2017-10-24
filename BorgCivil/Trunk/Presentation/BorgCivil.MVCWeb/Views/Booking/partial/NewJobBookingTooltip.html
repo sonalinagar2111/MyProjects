@@ -1,0 +1,5 @@
+﻿<p>Make: {{item.Make}}</p>
+<p>Model:  {{item.Model}}</p>
+<p>Year:  {{item.Year}}</p>
+<p ng-if="item.PartiallyAvailable">PartiallyAvailable:      <span ng-repeat="available in item.PartiallyAvailable">
+    {{available.FromDate| date :  "dd-MM-yyyy hh:mm a"}} To {{available.ToDate| date :  "dd-MM-yyyy hh:mm a"}}</span></p>

@@ -1,0 +1,38 @@
+﻿<div class="text-right m-b20 custom-btn-pos">
+    <a href="javascript:void(0);" ui-sref="configuration.AddSite()" class="btn btn-primary btn-i"><i class="fa fa-plus"></i>Add Site</a>
+</div>
+<div ng-controller="SiteListCtrl as slCtrl">
+    <div class="clearfix">
+        <div class="bc-panel-white clearfix">
+            <div class="col-md-5 p-l0">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Select Customer</label>
+                        <div class="form-group">                                                                                                                   
+                            <select ng-model="slCtrl.customer" name="customer" class="form-control" ng-required="true" ng-options="item.CustomerName for item in slCtrl.customerList track by item.CustomerId" ng-change="slCtrl.changeCustomer(slCtrl.customer.CustomerId);">
+                                <option value="">Default All</option>                                   
+                            </select>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Site List Content-->
+    <div>
+        <div id="grid"
+             ui-grid="slCtrl.uiGrid"
+             ui-grid-move-columns
+             ui-grid-pagination
+             ui-grid-resize-columns
+             ui.grid.autoResize
+             external-scopes="clickHandler"
+             class="grid">
+            <div class="watermark" ng-show="!slCtrl.uiGrid.data.length">No records found</div>
+        </div>
+    </div>
+
+    <!-- Site List  Content End-->
+  
+</div>

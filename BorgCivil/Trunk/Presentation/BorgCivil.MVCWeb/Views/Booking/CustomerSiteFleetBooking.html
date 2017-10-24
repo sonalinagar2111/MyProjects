@@ -1,0 +1,109 @@
+﻿<div ng-controller="WorkAllocationCtrl as waCtrl" ng-init="waCtrl.customerSiteLoad()">
+    <div class="hpanel hpanel-box hpanel-customer-box">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="booking-details left-heading">
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td><b>Customer Name:</b> {{waCtrl.customerName}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Site Details:</b> {{waCtrl.siteName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="bc-panel-white clearfix" ng-controller="StartDatepickerCtrl">
+            <div class="col-md-5 p-l0">
+                <div class="row">
+                    <div class="col-md-5 ">
+                        <label>From Date</label>
+                        <div class="form-group">
+                            <div class="input-group date-picker">
+                                <span class="input-group-addon" ng-click="startDate()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input placeholder="DD-MM-YYYY" ng-click="startDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       show-button-bar="false" ng-model="waCtrl.attributes.FromDate" is-open="popup1.opened"
+                                       max-date="waCtrl.attributes.ToDate" datepicker-options="dateOptions"
+                                       ng-required="true" close-text="Close" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 p-l0">
+                        <label>To Date</label>
+                        <div class="form-group">
+                            <div class="input-group date-picker">
+                                <span class="input-group-addon" ng-click="endDate()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input placeholder="DD-MM-YYYY" ng-click="endDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       show-button-bar="false" ng-model="waCtrl.attributes.ToDate" is-open="popup2.opened"
+                                       min-date="waCtrl.attributes.FromDate"
+                                       max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                       ng-required="true" close-text="Close" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 p-l0">
+                        <a href="javascript:void(0)" ng-click="waCtrl.customerSiteLoad()" class="btn-primary btn go-btn" title="GO">GO</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--BEGIN: Table And Search Top Section-->
+    <div class="row right-btn-group clearfix">
+        <div class="col-md-12">
+            <div class="btn-group pull-right ">
+                <button type="button" class="btn btn-default" title="PDF" ng-click="waCtrl.savePDF(waCtrl.bcaTableParams.data)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</button>
+                <button type="button" class="btn btn-default" title="Excel" ng-click="waCtrl.downloadExcelBookingList(waCtrl.bcaTableParams.data)"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</button>
+                <button type="button" class="btn btn-default" title="Print" ng-click="waCtrl.downloadPrintBookingList(waCtrl.bcaTableParams.data)"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+                <!--<button type="button" class="btn btn-default" title="Email" ng-click=""><i class="fa fa-envelope" aria-hidden="true"></i> Email</button>-->
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--END: Table And Search Top Section-->
+    <!--Pending Details Content-->
+    <div>
+        <div class="grid-tb-panel clearfix">
+            <table ng-table="waCtrl.bcaTableParams" class="table table-stripped toggle-arrow-tiny table-hover" show-filter="true">
+                <tr ng-repeat="item in $data" ng-if="$data.length > 0">
+                    <td title="'Driver Name'" filter="{ DriverName: 'text'}" sortable="'DriverName'" class="text-left">{{item.DriverName}}</td>
+                    <td title="'Fleet Number'" filter="{ FleetDetail: 'text'}" sortable="'FleetDetail'"  class="text-center">{{item.FleetDetail}}</td>
+                    <td title="'Job Type'" filter="{ WorkType: 'text'}" sortable="'WorkType'"><a href="javascript:void(0);" class="ng-binding">{{item.WorkType}}</a></td>
+                    <td title="'Material'" filter="{ Material: 'text'}" sortable="'Material'"><a href="javascript:void(0);" class="ng-binding">{{item.Material}}</a></td>
+                    <td ng-if="item.Status != 'BookedIn'" title="'Docket'" filter="{ Docket: 'text'}" sortable="'Docket'"><a href="javascript:void(0);"  ui-sref="booking.DocketList({BookingFleetId: item.BookingFleetId})" class="ng-binding">{{item.Dockets}}</a></td>
+                    <td ng-if="item.Status == 'BookedIn'" title="'Docket'" filter="{ Docket: 'text'}" sortable="'Docket'">{{item.Dockets}}</td>
+                    <td title="'Booking Number'" filter="{ BookingNumber: 'text'}" sortable="'BookingNumber'" class="text-center"><a href="javascript:void(0);" class="ng-binding">{{item.BookingNumber}}</a></td>
+                    <td title="'Status'" filter="{ Status: 'text'}" sortable="'Status'" class="text-center"><a href="javascript:void(0);" class="ng-binding">{{item.Status}}</a></td>
+                    <td title="'Action'" align="center" nowrap="true" width="1%">
+                        <div class="btn-group">
+                            <a class="dropdown-toggle" id="dLabel" href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="fa pe-7s-more action-icon" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu hdropdown notification dropdown-menu-right animated flipInX" role="menu">
+                                <li><a href="javascript:void(0);" ui-sref="booking.CreateDocket({BookingFleetId: item.BookingFleetId})"><i class="fa pe-7s-file" aria-hidden="true"></i> Add Docket</a></li>
+                                <li><a href="javascript:void(0);" ng-click="waCtrl.fleetComplete(item.BookingFleetId);"><i class="fa pe-7s-bookmarks" aria-hidden="true"></i>Marked As completed</a></li>
+                                <li><a href="javascript:void(0)" ui-sref="booking.FleetHistory({BookingFleetId: item.BookingFleetId, BookingId: item.BookingId})"><i class="fa fa-history fa-icon" aria-hidden="true"></i>  Fleet History</a></li>
+                                <li><a href="javascript:void(0);" role="button" ng-click="waCtrl.fleetAllocation(item, 'reallocation');"><i class="fa pe-7s-refresh" aria-hidden="true"></i>  Re-Allocation</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="$data.length <= 0">
+                    <td colspan="7" class="text-center">No records found</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

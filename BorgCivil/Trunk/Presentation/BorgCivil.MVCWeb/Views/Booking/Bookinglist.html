@@ -1,0 +1,62 @@
+<div class="animate-panel bookinglist" ng-controller="BookingListCtrl as blCtrl">
+    <div class="clearfix">
+        <div class="bc-panel-white clearfix" ng-controller="StartDatepickerCtrl">
+            <div class="col-md-8 p-l0">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>From Date</label>
+                        <div class="form-group">
+                            <div class="input-group date-picker">
+                                <span class="input-group-addon" ng-click="startDate()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input placeholder="DD-MM-YYYY" type="text" ng-click="startDate()" class="form-control" uib-datepicker-popup="{{format}}"
+                                       show-button-bar="false" ng-model="blCtrl.attributes.FromDate" is-open="popup1.opened"
+                                       max-date="blCtrl.attributes.ToDate" datepicker-options="dateOptions"
+                                       ng-required="true" close-text="Close" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 p-l0">
+                        <label>To Date</label>
+                        <div class="form-group">
+                            <div class="input-group date-picker">
+                                <span class="input-group-addon" ng-click="endDate()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input placeholder="DD-MM-YYYY" ng-click="endDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       show-button-bar="false" ng-model="blCtrl.attributes.ToDate" is-open="popup2.opened"
+                                       min-date="blCtrl.attributes.FromDate"
+                                       max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                       ng-required="true" close-text="Close" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 p-l0">
+                        <a href="javascript:void(0)" ng-click="blCtrl.getBookingList()" class="btn-primary btn go-btn" title="GO">GO</a>
+                        <a href="javascript:void(0)" ng-click="blCtrl.resetFilterDate()" class="btn-primary btn go-btn" title="RESET">RESET</a>
+                        <div ng-if="blCtrl.dateRangeError">
+                            <span class="has-error"> Both date are required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <!--END: Table And Search Top Section-->
+    <!--Pending Details Content-->
+    <div>
+        <div id="grid"
+             ui-grid="blCtrl.uiGrid"             
+             ui-grid-exporter
+             ui-grid-move-columns
+             ui-grid-pagination
+             ui-grid-resize-columns
+             external-scopes="clickHandler"
+             class="grid">
+            <div class="watermark" ng-show="!blCtrl.uiGrid.data.length">No records found</div>
+        </div>
+    </div>
+</div>
+    
+   

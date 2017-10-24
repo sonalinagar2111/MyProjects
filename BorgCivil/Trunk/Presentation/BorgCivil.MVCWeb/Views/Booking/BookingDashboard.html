@@ -1,0 +1,227 @@
+<div class="animate-panel dashboard-booking">
+    <div ng-controller="BookingDashboardCustomerListCtrl as bdclCtrl">
+        <!--Tab Start-->
+        <div ng-controller="TabCtrl">
+            <div class="tab-right-btn text-right" ng-if="bdclCtrl.isCustomerList == 'customer'">
+                <!--BEGIN:right button-->
+                <a ui-sref="configuration.AddCustomer()"
+                   class="btn btn-primary btn-i"
+                   title="Add New Customer"
+                   target="_blank">
+                    <i class="fa fa-plus"></i> Add New Customer
+                </a>
+                <a ui-sref="configuration.CustomerList"
+                   class="btn btn-primary btn-i"
+                   title="Edit Customer"
+                   target="_blank">
+                    <i class="fa fa-plus"></i> Customer List
+                </a>
+                <!--END:right button-->
+            </div>
+            <div class="tab-right-btn text-right" ng-if="bdclCtrl.isCustomerList != 'customer'">
+                <!--BEGIN:right button-->
+                <a ui-sref="configuration.AddFleetType"
+                   target="_blank"
+                   class="btn btn-primary btn-i"
+                   title="Add New Fleet">
+                    <i class="fa fa-plus"></i> Add New Fleet
+                </a>
+                <a ui-sref="configuration.FleetTypeList"
+                   class="btn btn-primary btn-i"
+                   title="Fleet Type List"
+                   target="_blank">
+                    <i class="fa fa-plus"></i> Fleet Type List
+                </a>
+                <!--END:right button-->
+            </div>
+            <uib-tabset active="active">
+                <uib-tab index="0"
+                         heading="Customers List" ng-click="bdclCtrl.tabClick('Customer')">
+                    <!--Customers List Content-->
+                    <div id="customer-tab">
+                        <div class="hpanel h-panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4 class="text-muted">Top Customers <span>Based on bookings done in last 15 days</span></h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="search-filter">
+                                            <input class="form-control"
+                                                   type="text"
+                                                   ng-model="searchCustomer"
+                                                   placeholder="Search">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row booking-dash">
+                            <div class="col-md-4 booking-dash-content customer-dashbord"
+                                 ng-repeat="customerslist in bdclCtrl.bookingDashboardList | filter:searchCustomer" ng-if="bdclCtrl.bookingDashboardList.length > 0">
+                                <div class="hpanel h-panel hgreen contact-panel">
+                                    <div class="panel-body">
+                                        <a ui-sref="configuration.EditCustomer({CustomerId: customerslist.CustomerId})"
+                                           target="_blank" title="Edit"
+                                           class="edit-btn">
+                                            <i class="fa fa-pencil-square-o"
+                                               aria-hidden="true"></i>
+                                        </a>
+                                        <div class="clearfix"></div>
+                                        <h3>
+                                            <a ui-sref="booking.CustomerDashboard({CustomerId: customerslist.CustomerId})"
+                                               target="_blank">
+                                                {{customerslist.CustomerName}}
+                                            </a>
+                                        </h3>
+                                        <div class="text-muted font-bold m-b-xs">{{customerslist.CustomerAddress}}</div>
+                                    </div>
+                                    <div class="panel-footer contact-footer">
+                                        <!--Panel-footer-content-->
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                            class="btn btn-danger btn-sm dropdown-toggle"
+                                                            data-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false"
+                                                            title="Booked In">
+                                                        Booked In  <b class="caret"></b>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="javascript:void(0)" target="_blank"
+                                                           ng-repeat="list in customerslist.BookedIn"
+                                                           ui-sref="booking.CustomerBookingList({CustomerId: customerslist.CustomerId,
+                                                                                        FleetTypeId: list.Id,
+                                                                                        StatusValue: 2,
+                                                                                        FromDate: bdclCtrl.currentDate,
+                                                                                        ToDate: bdclCtrl.currentDate})"
+                                                           class="dropdown-item"
+                                                           ng-if="customerslist.BookedIn.length > 0">
+                                                            {{ list.Fleet }} ({{ list.Count }})
+                                                        </a>
+                                                        <a href="javascript:void(0)"
+                                                           class="dropdown-item"
+                                                           ng-if="customerslist.BookedIn.length <= 0">
+                                                            No Data
+                                                        </a>
+                                                        <!--<a class="dropdown-item" href="javascript:void(0)">Truck (9)</a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">Watercart (6)</a>-->
+                                                    </div>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                            class="btn btn-success btn-sm dropdown-toggle"
+                                                            data-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false"
+                                                            title="Allocated">
+                                                        Allocated  <b class="caret"></b>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="javascript:void(0)" target="_blank"
+                                                           ng-repeat="list in customerslist.Allocated"
+                                                           ui-sref="booking.CustomerBookingList({CustomerId: customerslist.CustomerId,
+                                                                                        FleetTypeId: list.Id,
+                                                                                        StatusValue:3,
+                                                                                        FromDate: bdclCtrl.currentDate,
+                                                                                        ToDate: bdclCtrl.currentDate})"
+                                                           class="dropdown-item"
+                                                           ng-if="customerslist.Allocated.length > 0">
+                                                            {{ list.Fleet }} ({{ list.Count }})
+                                                        </a>
+                                                        <a href="javascript:void(0)"
+                                                           class="dropdown-item"
+                                                           ng-if="customerslist.Allocated.length <= 0">
+                                                            No Data
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <a ui-sref="booking.CurrentCustomerFleetList({CustomerId: customerslist.CustomerId,
+                                                                                      FromDate: bdclCtrl.currentDate,
+                                                                                      ToDate: bdclCtrl.currentDate})"
+                                                   title="Calendar" target="_blank"
+                                                   class="btn btn-default btn-sm">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!--Panel Footer content-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center norecord-position" ng-if="bdclCtrl.bookingDashboardList.length <= 0">No records found</div>
+                        </div>
+                    </div>
+                    <!--Customers List Content End-->
+                </uib-tab>
+                <uib-tab index="1" heading="Fleet List" ng-click="bdclCtrl.tabClick('Fleet')">
+                    <!--Fleet list Content-->
+                    <div id="vehicles-tab" class="tab-pane">
+                        <div class="hpanel h-panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4 class="text-muted">Total Fleet Booked {{bdclCtrl.customerFleetList.Booked|| 0}}/{{bdclCtrl.customerFleetList.Total|| 0}}</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="search-filter">
+                                            <div class="input-group">
+                                                <input class="form-control"
+                                                       type="text"
+                                                       ng-model="searchText"
+                                                       placeholder="Search"
+                                                       ng-change="bdclCtrl.searchFleet(searchText);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row booking-dash">
+                            <div class="col-lg-4 booking-dash-content"
+                                 ng-repeat="fleetlist in bdclCtrl.customerFleetList.FleetTypes" ng-if="bdclCtrl.customerFleetList.FleetTypes.length > 0">
+                                <div class="hpanel h-panel booking-box contact-panel">
+                                    <div class="panel-heading hbuilt">
+                                        {{fleetlist.Fleet}}
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <img ng-src="{{(fleetlist.Image !== '')?(bdclCtrl.imagePath+fleetlist.Image):(bdclCtrl.defaultImg)}}" />
+                                            </div>
+                                            <div class="col-md-7">
+                                                <h4 class="font-extra-bold no-margins text-success">
+                                                    <a ui-sref="booking.FleetListByFleetTypeId({FleetTypeId: fleetlist.FleetTypeId, Date: bdclCtrl.currentDate})"
+                                                       href="javascript:void(0)"
+                                                       target="_blank">Total:{{fleetlist.TotalFleet}}</a>
+                                                    <a ui-sref="booking.FleetListByFleetTypeId({FleetTypeId: fleetlist.FleetTypeId, Date: bdclCtrl.currentDate})"
+                                                       class="available-text"
+                                                       target="_blank">Available:{{fleetlist.AvailableFleet}}</a><br>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="panel-footer">
+                                       <a ui-sref="booking.BookingList" target="_blank">Go to Booking Page</a>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="text-center" ng-if="bdclCtrl.customerFleetList.FleetTypes.length <= 0">No records found</div>
+                            <!--<div class="col-lg-12 booking-dash-content" ng-if="bdclCtrl.customerFleetList.FleetTypes.length = 0">
+                                No Customer found
+                            </div>-->
+
+
+                        </div>
+                    </div>
+                    <!--Fleet list Content End-->
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <!--Tab End-->
+    </div>
+</div>

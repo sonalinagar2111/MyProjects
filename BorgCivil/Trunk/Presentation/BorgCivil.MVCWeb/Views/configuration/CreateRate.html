@@ -1,0 +1,97 @@
+﻿<div ng-controller="ManageRateCtrl as mrCtrl" class="customer-register">
+    <!-- Rate Form -->
+    <form name="manageRateDetailForm" ng-submit="mrCtrl.updateDetails(manageRateDetailForm.$valid)" novalidate>
+        
+        <!--Rate Details Content Start-->
+        <div id="site-details-tab">
+            <div class="bc-panel-white m-b-none">
+                <h3 class="sub-title">Rate Details</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Customer<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select ng-model="mrCtrl.customerObj"
+                                    name="customer"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-options="item.CustomerName for item in mrCtrl.customerList track by item.CustomerId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">                           
+                        <label>Fleet Type<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select ng-model="mrCtrl.fleetTypeObj"
+                                    name="customer"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-change="mrCtrl.fleetChange(false, mrCtrl.fleetTypeObj.FleetTypeId)"
+                                    ng-options="item.FleetTypeName for item in mrCtrl.fleetTypeList track by item.FleetTypeId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>                               
+                    </div>
+                    <div class="col-md-4">
+                        <label>Fleet Name<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select ng-model="mrCtrl.fleetRegistrationObj"
+                                    name="customer"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-options="item.RegistrationNumber for item in mrCtrl.fleetRegistrationList track by item.FleetRegistrationId">
+                                <option value="">Select</option>
+                            </select>
+                        </div> 
+                    </div>                   
+                </div>
+                <div class="row">  
+                    <div class="col-md-4">
+                        <label>Work Type<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select ng-model="mrCtrl.workTypeObj"
+                                    name="customer"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-options="item.Text for item in mrCtrl.workTypeList track by item.Value">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>                     
+                    <div class="col-md-4">                            
+                        <label>Rate Type<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select ng-model="mrCtrl.attributes.RateType"
+                                    name="customer"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-options="item for item in mrCtrl.rateTypeList">
+                                <option value="">Select</option>
+                            </select>
+                        </div>                            
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Rate <span class="text-danger"> *</span></label>
+                            <input type="number" class="form-control" name="rate" ng-model="mrCtrl.attributes.Rate" ng-pattern="/^([0-9]{1,5})(([.]{1})([0-9]{1,2}))?$/" min="0" required>
+                            <div ng-if="manageRateDetailForm.rate.$invalid && !manageRateDetailForm.rate.$pristine && !manageRateDetailForm.rate.$error.required ">
+                                <span class="has-error"> This field is invalid.</span>
+                            </div>
+                         </div>                       
+                    </div>                   
+                </div>
+            </div>
+            <div class="bc-panel-white">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" title="Close" ng-click="mrCtrl.cancelRate()">Close</button>
+                        <button type="submit" class="btn btn btn-primary" data-dismiss="modal" title="Save">Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Rate Details Content End-->
+    </form>
+    <!--Rate Form End-->
+</div>

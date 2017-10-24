@@ -1,0 +1,93 @@
+<!-- JS -->
+<script type="text/javascript" src="popup.js"></script>
+
+<!-- CSS -->
+<style type="text/css">
+	.profile-form label{
+		display: inline-block;
+		padding: 7px 0;
+		text-align: left !important;
+		float: left; 
+	}
+
+	button{
+		cursor:pointer;
+		background-color:#0084bf;
+		padding:10px 25px 10px 25px;
+		display:inline-block;color:#fff;
+		border:none;border-radius:2px;
+		font-size:12px;
+		float: right;
+	}
+
+	button:hover{
+		background-color:#0073b1;
+	}
+</style>
+
+<!-- HTML -->
+	<div class="profile-form" 
+		style="width:160px;
+				height: auto;
+				text-align:center;
+				font-family:arial
+				background-color: #ffffff;"
+		align="center">
+
+		<label>Enter Number of Profiles</label>
+		<input type="number" 
+				name="profiles" 
+				id="profiles" 
+				style="width:100%;
+						border: solid 1px #ccc;
+					    padding: 5px;
+					    float: left;"><br>
+	    <p id="profileMsg" 
+	    	style="color:red; display: none;">
+	    	Invalid profile entry
+	    </p>
+
+		<label>Minimum Seconds per Action</label>
+		<input type="number"  
+				name="minTimeInterval" 
+				id="minTimeInterval" 
+				style="width:100%; 
+						border: solid 1px #ccc;
+						padding: 5px;
+						float: left;"><br>
+	    <p id="minTimeIntervalMsg" 
+	    	style="color:red; 
+			display: none;">
+		    Invalid seconds entry
+	    </p>
+
+		<label>Maximum Seconds per Action</label>
+		<input type="number" 
+				name="maxTimeInterval" 
+				id="maxTimeInterval" 
+				style="width:100%;
+				border: solid 1px #ccc;
+				padding: 5px;
+				float: left;"><br>
+	    <p id="maxTimeIntervalMsg" 
+		    style="color:red; 
+		    display: none;">
+		    Invalid execution time entry
+	    </p>
+
+		<div style="clear: both;"></div>
+		<p id="avgTimeIntervalMsg"
+		 	style="color:red; 
+		    display: none;">
+			Time difference should >= 4    	
+		</p>
+		<p id="timeIntervalMsg"
+		 	style="color:red; 
+		    display: none;">
+			Invalid time difference    	
+		</p>
+	    <button id="runButton" style="margin-top:5px;">Run</button>
+	    <button id="stopButton">Stop</button>
+	</div>
+	
+

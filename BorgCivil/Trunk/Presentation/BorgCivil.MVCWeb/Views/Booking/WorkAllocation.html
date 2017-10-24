@@ -1,0 +1,200 @@
+﻿<div ng-controller="WorkAllocationCtrl as waCtrl">
+    <!--Tab Start-->
+    <div ng-controller="TabCtrl" class="workallocation">
+        <!--Date range for listing-->
+
+        <div class="clearfix">
+            <div class="bc-panel-white clearfix" ng-controller="StartDatepickerCtrl">
+                <div class="col-md-8 p-l0">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>From Date</label>
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY" ng-click="startDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false" ng-model="waCtrl.attributes.FromDate" is-open="popup1.opened"
+                                           max-date="waCtrl.attributes.ToDate" datepicker-options="dateOptions"
+                                           ng-required="true" close-text="Close" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 p-l0">
+                            <label>To Date</label>
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="endDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY" ng-click="endDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false" ng-model="waCtrl.attributes.ToDate" is-open="popup2.opened"
+                                           min-date="waCtrl.attributes.FromDate"
+                                           max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                           ng-required="true" close-text="Close" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-l0">
+                            <a href="javascript:void(0)" ng-click="waCtrl.fiterdWorkAllocationData()" class="btn-primary btn go-btn" title="GO">GO</a>
+                            <a href="javascript:void(0)" ng-click="waCtrl.resetWorkAllocationFilterDate()" class="btn-primary btn go-btn" title="RESET">RESET</a>
+                            <div ng-if="waCtrl.dateRangeError">
+                                <span class="has-error"> Both date are required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Search Filter-->
+        <div>
+            <div>
+                <!--<div class="row right-btn-group clearfix">
+                    <div class="col-md-12" ng-if="waCtrl.stateParamBookingId =='' || waCtrl.stateParamBookingId =='undefined'">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default" title="PDF" ng-click="waCtrl.savePDF(waCtrl.bcaTableParams.data)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</button>
+                            <button type="button" class="btn btn-default" title="Excel" ng-click="waCtrl.downloadExcelBookingList(waCtrl.bcaTableParams.data)"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</button>
+                            <button type="button" class="btn btn-default" title="Print" ng-click="waCtrl.downloadPrintBookingList(waCtrl.bcaTableParams.data)"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+                            <button type="button" class="btn btn-default" title="Email" ng-click="waCtrl.sendEmail(waCtrl.bcaTableParams.data)"><i class="fa fa-envelope" aria-hidden="true"></i> Email</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>-->
+                <!--Search Filter-->
+
+                <div>
+                    <div ng-if="waCtrl.stateParamBookingId !==''">
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="booking-details left-heading p-t10 p-b10">
+                                            <table cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><b>Booking Number:</b> {{waCtrl.waListData.BookingNumber}}</td>
+                                                        <td><b>Customer Name:</b> {{waCtrl.waListData.CustomerName}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Booking Start Date:</b> {{waCtrl.waListData.BookingFleetStartDate | date : "dd-MM-yyyy"}}</td>
+                                                        <td><b>Booking End Date:</b> {{waCtrl.waListData.BookingFleetEndDate | date : "dd-MM-yyyy"}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-right-btn text-right">
+                            <a href="javascript:void(0);" ng-click="waCtrl.fleetAllocation(waCtrl.waListData, 'new');" class="btn btn-primary btn-i"><i class="fa fa-plus"></i>Add Fleet</a>
+                        </div>
+                    </div>
+                    <uib-tabset active="active">
+                        <uib-tab index="0" heading="Booked In" ng-click="waCtrl.tabClick('Pending')">
+                            <!--Pending Details Content-->
+
+                            <div>
+                                <div id="grid0"
+                                     ui-grid="waCtrl.uiGrid0"                                    
+                                     ui-grid-exporter
+                                     ui-grid-move-columns
+                                     ui-grid-pagination
+                                     ui-grid-resize-columns
+                                     external-scopes="clickHandler"
+                                     class="grid">
+                                    <div class="watermark" ng-show="!waCtrl.uiGrid0.data.length">No records found</div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="1" heading="Allocated" ng-click="waCtrl.tabClick('Allocated')">
+                            <!--Allocated  Details Content-->
+
+                            <div>
+                                <div id="grid1"
+                                     ui-grid="waCtrl.uiGrid1"                                    
+                                     ui-grid-exporter
+                                     ui-grid-move-columns
+                                     ui-grid-pagination
+                                     ui-grid-resize-columns
+                                     external-scopes="clickHandler"
+                                     class="grid">
+                                    <div class="watermark" ng-show="!waCtrl.uiGrid1.data.length">No records found</div>
+
+                                </div>
+
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="2" heading="Completed" ng-click="waCtrl.tabClick('Completed')">
+                            <!--Completed Details Content-->
+
+                            <div>
+                                <div id="grid2"
+                                     ui-grid="waCtrl.uiGrid2"                                    
+                                     ui-grid-exporter
+                                     ui-grid-move-columns
+                                     ui-grid-pagination
+                                     ui-grid-resize-columns
+                                     external-scopes="clickHandler"
+                                     class="grid">
+                                    <div class="watermark" ng-show="!waCtrl.uiGrid2.data.length">No records found</div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                    <div class="clearfix"></div>
+                    <div class="modal fade" id="customer-details" tabindex="-1" role="dialog" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header text-center">
+                                    <h4 class="modal-title">Customer Details</h4>
+                                    <div class="clostbtn">
+                                        <button type="button" data-dismiss="modal" aria-label="Close"><img src="../images/closebtn.png"></button>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Customer Name</label>
+                                                <input class="form-control" readonly="readonly" name="" value="2010 Debtors" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>ABN/ ACN Number</label>
+                                                <input class="form-control only-float" readonly="readonly" name="" value="19150704331" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email Address</label>
+                                                <input class="form-control only-float" readonly="readonly" name="" value="accounts@cbbgroup.com.au" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Contact Number</label>
+                                                <input class="form-control" readonly="readonly" name="" value="02 9621 4433" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Tab End-->

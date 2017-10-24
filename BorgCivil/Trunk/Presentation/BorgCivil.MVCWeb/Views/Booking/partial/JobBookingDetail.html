@@ -1,0 +1,574 @@
+﻿<div class="inmodal">
+    <div class="modal-header text-center">
+        <!--<i class="fa fa-sliders color-success h-modal-icon"></i>-->
+        <h4 class="modal-title">New Job</h4>
+        <div class="clostbtn">
+            <button type="button"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    ng-click="jbCtrl.cancel()">
+                <img src="Content/images/closebtn.png" title="Close">
+            </button>
+        </div>
+    </div>
+    <form ng-submit="jbCtrl.manageFleetBooking()" novalidate>
+        <div class="modal-body">
+            <!--Form Content Start-->
+            <div class="bc-panel-white">
+                <div class="form-group">
+                    <h5>Booking Info</h5>
+                </div>
+                <div class="row clearfix">
+                    <div ng-if="jbCtrl.showDropdown === true">
+                        <div class="col-md-3">
+                            <label>Select Customer<span class="text-danger">*</span></label>
+                            <div class="form-group">
+                                <select ng-model="jbCtrl.customerAttribute"
+                                        name="customer"
+                                        class="form-control"
+                                        ng-required="true"
+                                        ng-options="item.CustomerName for item in jbCtrl.customerList track by item.CustomerId"
+                                        ng-change="jbCtrl.changeCustomer(jbCtrl.customerAttribute.CustomerId);">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Select Site<span class="text-danger">*</span></label>
+                            <div class="form-group">
+                                <select ng-model="jbCtrl.siteAttribute"
+                                        name="site"
+                                        class="form-control"
+                                        ng-required="true"
+                                        ng-options="item.SiteName for item in jbCtrl.siteList track by item.SiteId"
+                                        ng-change="jbCtrl.changeSite(jbCtrl.siteAttribute.SiteId);">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                    <span class="clearfix"></span>
+                    <div class="col-md-3">
+                        <label>Calling Date & Time<span class="text-danger">*</span></label>
+                        <div class="form-group" ng-controller="DateTimePickerCtrl">
+                            <div class="input-group date">
+                                <span class="input-group-addon" ng-click="openCalendar()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input type="text"
+                                       tabindex="1"
+                                       id="dateTime"
+                                       ng-model="jbCtrl.attributes.CallingDateTime"
+                                       ng-change="jbCtrl.setMinEndDate(jbCtrl.attributes.CallingDateTime);"
+                                       name="appointment_date"
+                                       class="form-control"
+                                       date-time-picker
+                                       datetimepicker-options="{format:'DD-MM-YYYY hh:mm A',maxDate: {{jbCtrl.minDate}}}"
+                                       required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Booking Start Date <span class="text-danger">*</span></label>
+                        <div ng-controller="StartDatepickerCtrl">
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY"
+                                           type="text"
+                                           ng-click="startDate()"
+                                           name="expiryDate"
+                                           class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false"
+                                           ng-model="jbCtrl.attributes.FleetBookingDateTime"
+                                           is-open="popup1.opened"
+                                           min-date="minDate"
+                                           max-date="'{{maxDate}}'"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                           ng-model-options="{timezone: 'UTC'}"
+                                           ng-change="jbCtrl.startDateChange(jbCtrl.attributes.FleetBookingDateTime);"
+                                           required readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Booking End Date <span class="text-danger">*</span></label>
+                        <div ng-controller="StartDatepickerCtrl">
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY"
+                                           type="text"
+                                           ng-click="startDate()"
+                                           name="expiryDate"
+                                           class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false"
+                                           ng-model="jbCtrl.attributes.EndDate"
+                                           is-open="popup1.opened"
+                                           min-date="jbCtrl.attributes.FleetBookingDateTime"
+                                           max-date="'{{maxDate}}'"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                           ng-model-options="{timezone: 'UTC'}"
+                                           ng-change="jbCtrl.endDateChange(jbCtrl.attributes.EndDate);"
+                                           required readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">                      
+                        <a href="javascript:void(0)" ng-click="jbCtrl.resetBookingDateRange()" class="btn-primary btn go-btn" title="Reset Dates">Reset</a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Notes For Allocator<span class="text-danger">*</span></label>
+                            <textarea class="form-control"
+                                      ng-model="jbCtrl.attributes.AllocationNotes"
+                                      required></textarea>
+                        </div>
+                    </div>
+                    <span class="clearfix"></span>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <h5>Gate and Supervisor Info</h5>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!--Supervisor Detail-->
+                    <div class="col-md-3">
+                        <label>Supervisor Name<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <select class="form-control"
+                                    ng-model="jbCtrl.supervisorAttribute"
+                                    ng-options="item as item.Options for item in jbCtrl.supervisorGateDetail.SupervisorList"
+                                    required>
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Supervisor Email</label>
+                            <input class="form-control"
+                                   readonly
+                                   type="text"
+                                   value="2"
+                                   name="email"
+                                   ng-model="jbCtrl.supervisorAttribute.SupervisorEmail" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Supervisor Moblie Number</label>
+                            <input class="form-control"
+                                   readonly
+                                   type="text"
+                                   name="moblienumber"
+                                   id="txt3"
+                                   ng-model="jbCtrl.supervisorAttribute.SupervisorMobileNumber" />
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!--Gate Detail-->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Gate Number <span class="text-danger"> *</span></label>
+                            <select ng-model="jbCtrl.gateAttribute"
+                                    ng-change="jbCtrl.getContactDetail(jbCtrl.gateAttribute.GateId)"
+                                    ng-options="item as item.Option for item in jbCtrl.supervisorGateDetail.GateList"
+                                    class="form-control"
+                                    required>
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+
+                        <!--<div class="form-group">
+                            <select class="form-control"
+                                    ng-model="jbCtrl.gateAttribute"
+                                    ng-change="jbCtrl.getContactDetail(jbCtrl.gateAttribute.GateId)"
+                                    ng-options="item as item.Option for item in jbCtrl.supervisorGateDetail.GateList"
+                                    required>
+                                <option value="">Select</option>
+                            </select>
+                        </div>-->
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Contact Person Name <span class="text-danger">*</span></label>
+                            <!--<input class="form-control" value="DAL87W, Hilux" readonly="readonly" type="text" ng-model="mjbCtrl.gate.RegistrationDescription">-->
+                            <select class="form-control"
+                                    ng-model="jbCtrl.contactAttribute"
+                                    ng-options="item as item.ContactPerson for item in jbCtrl.contactList"
+                                    ng-selected="item.IsDefault===true"
+                                    required>
+                                <option value="">Select</option>
+                            </select>
+                            <!--<input type="text" class="form-control" ng-model="mbsCtrl.gate.ContactPerson">-->
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="jbCtrl.contactAttribute.Email"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="jbCtrl.contactAttribute.MobileNumber"
+                                   disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Notes For Driver</label>
+                            <textarea class="form-control"
+                                      ng-model="jbCtrl.fleetDetailAttribute.notesForDrive"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Wet Hire</label>
+                            <ul class="list-inline inline-form-element">
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" name="radiowet" ng-model="jbCtrl.fleetDetailAttribute.iswethire" value="true" icheck ng-checked="true"> Yes</label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" name="radiowet" ng-model="jbCtrl.fleetDetailAttribute.iswethire" value="false" icheck> No</label></div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Shift</label>
+                            <ul class="list-inline inline-form-element">
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" name="radioshift" ng-model="jbCtrl.fleetDetailAttribute.isDayShift" value="0" icheck ng-checked="true"> Day</label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" name="radioshift" ng-model="jbCtrl.fleetDetailAttribute.isDayShift" value="1" icheck> After Noon</label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" name="radioshift" ng-model="jbCtrl.fleetDetailAttribute.isDayShift" value="2" icheck> Night</label></div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                    <label>Work Type</label>
+                        <div class="form-group">
+                            <select class="form-control"                                  
+                                    ng-model="jbCtrl.fleetDetailAttribute.workTypeObj"
+                                    ng-change="jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.workTypeObj.Value, 'workType')">
+                                <option value="">Select</option>
+                                <option value="{{item.Value}}" ng-repeat="item in jbCtrl.workTypeDropdownList">{{item.Text}}</option>
+                            </select>
+                        </div>
+                        <span class="clearfix"></span>
+                        <span ng-if="jbCtrl.validField.validWorkType" class="has-error">This field is required for booking fleet</span>
+
+                    </div>
+                    <div class="col-md-3">
+                        <label>Fleet Available Type</label>
+                        <div class="form-group">
+                            <select class="form-control"                                   
+                                    ng-model="jbCtrl.fleetDetailAttribute.fleetAvailableTypeObj"
+                                    ng-change="jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetAvailableTypeObj.Id, 'fleetAvailableType')">
+                                <option value="">Select</option>
+                                <option value="{{item.Id}}" ng-repeat="item in jbCtrl.fleetAvailableTypeDropdownList">{{item.Text}}</option>
+                            </select>
+                        </div>
+                        <span class="clearfix"></span>
+                        <span ng-if="jbCtrl.validField.validFleetAvailable" class="has-error">This field is required for booking fleet</span>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Fleet Detail-->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <h5>Fleet Detail</h5>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-3">
+                        <label>From Date</label>
+                        <div class="form-group" ng-controller="DateTimePickerCtrl">
+                            <div class="input-group date" ng-if="jbCtrl.showDateTimePicker">
+                                <span class="input-group-addon" ng-click="jbCtrl.openFleetFromDateCalendar()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input type="text"
+                                       tabindex="1"
+                                       id="fleetFromDateTime"
+                                       name="appointment_date"
+                                       class="form-control"
+                                       ng-model="jbCtrl.fleetDetailAttribute.fleetFromDate"
+                                       date-time-picker
+                                       datetimepicker-options="{useCurrent:false,format:'DD-MM-YYYY hh:mm A'}"
+                                       ng-change="jbCtrl.fromDateChange(jbCtrl.fleetDetailAttribute.fleetFromDate);jbCtrl.getAvailableFleets();"
+                                       ng-blur="jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetFromDate, 'fromDate')"
+                                       ng-if="jbCtrl.check" />
+                            </div>
+                            <span class="clearfix"></span>
+                            <span ng-if="jbCtrl.validField.validFleetFromDate" class="has-error">This field is required for booking fleet</span>
+
+                        </div>
+                        <!--<div ng-controller="StartDatepickerCtrl">
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY"
+                                           type="text"
+                                           name="expiryDate"
+                                           class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false"
+                                           ng-model="jbCtrl.fleetDetailAttribute.fleetFromDate"
+                                           is-open="popup1.opened"
+                                           min-date="jbCtrl.attributes.FleetBookingDateTime"
+                                           max-date="jbCtrl.attributes.EndDate"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                           ng-model-options="{timezone: 'UTC'}"
+                                           ng-change="jbCtrl.fromDateChange(jbCtrl.fleetDetailAttribute.fleetFromDate);"
+                                           ng-blur="jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetFromDate, 'fromDate')" />
+                                </div>
+                                <span class="clearfix"></span>
+                                <span ng-if="jbCtrl.validField.validFleetFromDate" class="has-error">This field is required for booking fleet</span>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-md-3">
+                        <label>To Date </label>
+                        <div class="form-group" ng-controller="DateTimePickerCtrl">
+                            <div class="input-group date" ng-if="jbCtrl.showDateTimePicker">
+                                <span class="input-group-addon" ng-click="jbCtrl.openFleetToDateCalendar()">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                                <input type="text"
+                                       tabindex="1"
+                                       id="fleetToDateTime"
+                                       name="appointment_date"
+                                       class="form-control"
+                                       ng-model="jbCtrl.fleetDetailAttribute.fleetToDate"
+                                       min-date="jbCtrl.fleetDetailAttribute.fleetFromDate"
+                                       max-date="jbCtrl.attributes.EndDate"
+                                       date-time-picker
+                                       datetimepicker-options="{useCurrent:false,format:'DD-MM-YYYY hh:mm A'}"
+                                       ng-change="jbCtrl.fromDateChange(jbCtrl.fleetDetailAttribute.fleetToDate);jbCtrl.getAvailableFleets();"
+                                       ng-blur="jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetToDate, 'toDate')"
+                                       ng-if="jbCtrl.check" />
+                            </div>
+                            <span class="clearfix"></span>
+                            <span ng-if="jbCtrl.validField.validFleetToDate" class="has-error">This field is required for booking fleet</span>
+
+                        </div>
+
+                        <!--<div ng-controller="StartDatepickerCtrl">
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY"
+                                           type="text"
+                                           ng-click="startDate()"
+                                           name="expiryDate"
+                                           class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false"
+                                           ng-model="jbCtrl.fleetDetailAttribute.fleetToDate"
+                                           is-open="popup1.opened"
+                                           min-date="jbCtrl.fleetDetailAttribute.fleetFromDate"
+                                           max-date="jbCtrl.attributes.EndDate"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                           ng-model-options="{timezone: 'UTC'}"
+                                           ng-blur="jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetToDate, 'toDate')" readonly />
+                                </div>
+                                <span class="clearfix"></span>
+                                <span ng-if="jbCtrl.validField.validFleetToDate" class="has-error">This field is required for booking fleet</span>
+                            </div>
+                        </div>-->                       
+                    </div>
+                    <div class="col-md-1">                       
+                        <div class="form-group">                            
+                            <a href="javascript:void(0)" ng-click="jbCtrl.resetFleetDateRange()" class="btn-primary btn go-btn" title="Reset Dates">Reset</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Fleet Type</label>
+                        <div class="form-group">
+                            <select class="form-control"
+                                    ng-change="jbCtrl.getAvailableFleets();jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetTypeObj.FleetTypeId, 'fleetType')"
+                                    ng-model="jbCtrl.fleetDetailAttribute.fleetTypeObj"
+                                    ng-options="item as item.FleetTypeName for item in jbCtrl.fleetTypeDropdownList">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="clearfix"></span>
+                            <span ng-if="jbCtrl.validField.validFleetType" class="has-error">This field is required for booking fleet</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Fleet Count</label>
+                        <div class="form-group">
+                            <input type="number"
+                                   class="form-control"
+                                   ng-model="jbCtrl.fleetDetailAttribute.fleetCount"
+                                   ng-change="jbCtrl.checkCount();jbCtrl.checkValidation(jbCtrl.fleetDetailAttribute.fleetCount, 'fleetCount')" min="0">
+                            <span class="clearfix"></span>
+                            <span ng-if="jbCtrl.validField.maxCount" class="has-error">Fleetcount should not be less than to allocated fleets</span>
+                            <span ng-if="jbCtrl.validField.validFleetCount" class="has-error">This field is required for booking fleet</span>
+                        </div>
+                    </div>
+
+                    <!-- Available Fleets -->                    
+                    <div class="clearfix"></div>
+                    <div class="col-md-11">
+                        <div class="form-group">
+
+                            <label>Full Available Fleets ( {{jbCtrl.count}} )</label>
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in jbCtrl.fleetRegistrationList.FullyAvailableFleet">
+                                    <div class="checkbox css-popover-trigger">
+                                        <div class="css-popover-content">
+                                            <div class="arrow"></div>
+                                            <p>Make: {{item.Make}}</p><p>Model:  {{item.Model}}</p><p>Year:  {{item.Year}}</p>
+                                        </div>
+
+                                        <label class="p-l0">
+                                            <input icheck="" type="checkbox"
+                                                   id="{{item.FleetRegistrationId}}"
+                                                   ng-model="jbCtrl.fleetRegistrationId[item.FleetRegistrationId]"
+                                                   class="i-checks"
+                                                   ng-change="jbCtrl.checkCount(item)">
+                                            {{item.RegistrationNumber}}
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <label>Partial Booked Fleets ( {{jbCtrl.countPartial}} )</label>
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in jbCtrl.fleetRegistrationList.PartiallyBookedFleet">
+                                    <div class="checkbox css-popover-trigger">
+                                        <div class="css-popover-content">
+                                            <div class="arrow"></div>
+                                            <p>Make: {{item.Make}}</p><p>Model:  {{item.Model}}</p><p>Year:  {{item.Year}}</p>
+                                            <div ng-if="item.PartiallyBooked">
+                                                PartiallyAvailable:      <p ng-repeat="available in item.PartiallyBooked">
+                                                    {{available.FromDate| date :  "dd-MM-yyyy hh:mm a"}} To {{available.ToDate| date :  "dd-MM-yyyy hh:mm a"}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <label class="p-l0">
+                                            <input icheck="" type="checkbox"
+                                                   id="{{item.FleetRegistrationId}}"
+                                                   ng-model="jbCtrl.fleetRegistrationId[item.FleetRegistrationId]"
+                                                   class="i-checks"
+                                                   ng-change="jbCtrl.checkCount(item)" ng-disabled="(item.PartiallyAvailable.length>0)">
+                                            {{item.RegistrationNumber}}
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <label>Partial Available Fleets ( {{jbCtrl.countPartial}} )</label>
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in jbCtrl.fleetRegistrationList.PartiallyAvailableFleet">
+                                    <div class="checkbox css-popover-trigger">
+                                        <div class="css-popover-content">
+                                            <div class="arrow"></div>
+                                            <p>Make: {{item.Make}}</p><p>Model:  {{item.Model}}</p><p>Year:  {{item.Year}}</p>
+                                            <div ng-if="item.PartiallyAvailable">
+                                                PartiallyAvailable:      <p ng-repeat="available in item.PartiallyAvailable">
+                                                    {{available.FromDate| date :  "dd-MM-yyyy hh:mm a"}} To {{available.ToDate| date :  "dd-MM-yyyy hh:mm a"}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <label class="p-l0">
+                                            <input icheck="" type="checkbox"
+                                                   id="{{item.FleetRegistrationId}}"
+                                                   ng-model="jbCtrl.fleetRegistrationId[item.FleetRegistrationId]"
+                                                   class="i-checks"
+                                                   ng-change="jbCtrl.checkCount(item)" ng-disabled="(item.PartiallyAvailable.length>0)">
+                                            {{item.RegistrationNumber}}
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <div class="form-group add-btn m-t5 m-b5">
+                            <a href="javascript:void(0)" ng-click="jbCtrl.addMoreFleet()" class="btn btn-primary btn-i" title="Add More"><i class="fa fa-plus"></i> Add More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--bc-panel-white end-->
+            <div class="tb-panel m-b-none m-t-sm">
+                <div id="pending-tab" class="tab-pane active">
+                    <div class="grid-tb-panel">
+                        <table class="table table-stripped" data-page-size="8">
+                            <tr>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Fleet Type</th>
+                                <th>Available Type</th>
+                                <th>Fleet Registration</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr ng-repeat="fleet in jbCtrl.addFleets track by $index" ng-if="fleet !== null">
+                                <td>{{fleet.FleetBookingDateTime}}</td>
+                                <td>{{fleet.FleetBookingEndDate}}</td>
+                                <td>{{fleet.FleetTypeName}}</td>
+                                <td>{{(fleet.AvailableType==1)?'Full': 'Partial'}}</td>
+                                <td>{{fleet.FleetRegistrationNumber}}</td>
+                                <td class="delete-view">
+                                    <a type="button"
+                                       href="javascript:void(0);"
+                                       ng-click="jbCtrl.deleteFleetRows($index)"
+                                       title="Delete">
+                                        <i class="fa pe-7s-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--Form Content End-->
+        </div>
+        <div class="modal-footer">
+            <span ng-if="jbCtrl.validField.validFleetList" class="has-error">Please add at least one fleet detail</span>
+            <button type="button" class="btn btn-default" ng-click="jbCtrl.cancel()" title="Close">Close</button>
+            <button type="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+        </div>
+    </form>
+</div>
+

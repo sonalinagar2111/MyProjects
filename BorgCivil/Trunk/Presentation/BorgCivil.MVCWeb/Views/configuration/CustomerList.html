@@ -1,0 +1,22 @@
+﻿<div class="text-right m-b20 custom-btn-pos">
+    <a href="javascript:void(0);" ui-sref="configuration.AddCustomer()" class="btn btn-primary btn-i"><i class="fa fa-plus"></i>Add Customer</a>
+</div>
+
+<div class="animate-panel bookinglist" ng-controller="CustomerListCtrl as clCtrl">
+    
+    <!--Customer List Content-->
+    <div>
+        <div id="grid"
+             ui-grid="clCtrl.uiGrid"
+             ui-grid-move-columns
+             ui-grid-pagination
+             ui-grid-resize-columns
+             ui.grid.autoResize
+             external-scopes="clickHandler"
+             class="grid">
+            <div class="watermark" ng-show="!clCtrl.uiGrid.data.length">No records found</div>
+        </div>
+    </div>
+
+    <!-- Customer List  Content End-->   
+</div>

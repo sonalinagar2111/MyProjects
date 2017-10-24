@@ -1,0 +1,82 @@
+﻿<div class="inmodal contactdetails">
+    <div class="modal-header text-center">
+        <!--<i class="fa fa-sliders color-success h-modal-icon"></i>-->
+        <h4 class="modal-title">Edit Leave History</h4>
+        <div class="clostbtn">
+            <button type="button" ng-click="drCtrl.hideCancel()" title="Close"><img src="Content/images/closebtn.png"></button>
+        </div>
+    </div>
+    <form name="contactDetailForm" ng-submit="drCtrl.updateDriverLeaveHistory()" novalidate>
+        <div class="modal-body">           
+           
+            <div class="row">
+                <div class="col-md-5" ng-controller="StartDatepickerCtrl">                   
+                    <div class="form-group">
+                        <label>From Date<span class="text-danger"> *</span></label>
+                        <div class="input-group date-picker">
+                            <span class="input-group-addon" ng-click="startDate()">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                            <input placeholder="DD-MM-YYYY" ng-click="startDate()" type="text" name="expiryDate" class="form-control" uib-datepicker-popup="{{format}}"
+                                    show-button-bar="false" ng-model="drCtrl.leaveHistoryAttributes.LeaveFromDate" is-open="popup1.opened" min-date="minDate"
+                                    max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                    ng-change="drCtrl.countHistoryLeave()"
+                                    close-text="Close" ng-model-options="{timezone: 'UTC'}" readonly required/>
+                        </div>
+                    </div>                    
+                </div>
+            
+                <div class="col-md-5" ng-controller="StartDatepickerCtrl">                   
+                    <div class="form-group">
+                        <label>To Date<span class="text-danger"> *</span></label>
+                        <div class="input-group date-picker">
+                            <span class="input-group-addon" ng-click="startDate()">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                            <input placeholder="DD-MM-YYYY" ng-click="startDate()" type="text" name="expiryDate" class="form-control" uib-datepicker-popup="{{format}}"
+                                    show-button-bar="false" ng-model="drCtrl.leaveHistoryAttributes.LeaveToDate" is-open="popup1.opened" min-date="drCtrl.leaveHistoryAttributes.LeaveFromDate"
+                                    max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                    ng-change="drCtrl.countHistoryLeave()"
+                                    close-text="Close" ng-model-options="{timezone: 'UTC'}" readonly required/>
+                        </div>
+                    </div>                   
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <a href="javascript:void(0)" ng-click="drCtrl.resetLeaveHistoryDateRange()" class="btn-primary btn go-btn" title="RESET"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Count</label>
+                        <input class="form-control only-float" name="" type="text" ng-model="drCtrl.leaveHistoryCount">
+                    </div>
+                    <div ng-if="drCtrl.leaveHistoryCountError">
+                        <span class="has-error"> This leave difference is invalid.</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Leave Type <span class="text-danger"> *</span></label>
+                        <input class="form-control only-float" name="" type="text" ng-model="drCtrl.leaveHistoryAttributes.LeaveType" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Note <span class="text-danger"> *</span></label>
+                        <textarea class="form-control" rows="3" id="comment" ng-model="drCtrl.leaveHistoryAttributes.LeaveNote" required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" title="Close" ng-click="drCtrl.hideCancel()">Close</button>
+            <button type="submit" class="btn btn btn-primary" data-dismiss="modal" title="Update">Update</button>          
+        </div>
+    </form>
+</div>
+

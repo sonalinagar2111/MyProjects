@@ -1,0 +1,28 @@
+﻿<div ng-controller="CheckListCtrl as clCtrl">
+    <div class="text-right m-b20 custom-btn-pos">
+        <a href="javascript:void(0);" ng-click="clCtrl.addCheckList()" class="btn btn-primary btn-i"><i class="fa fa-plus"></i>Add Check List</a>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+
+            <!--Check List Content-->
+            <div>
+                <div id="grid"
+                     ui-grid="clCtrl.uiGrid"                    
+                     ui-grid-move-columns
+                     ui-grid-pagination
+                     ui-grid-resize-columns
+                     ui.grid.autoResize
+                     external-scopes="clickHandler"
+                     class="grid">
+                    <div class="watermark" ng-show="!clCtrl.uiGrid.data.length">No records found</div>
+                </div>
+            </div>
+
+            <!-- -Check List  Content End-->
+        </div>
+        <div class="col-md-4">
+            <div class="right-img"><img src="Content/images/checklist.png" alt="checklist" /></div>
+        </div>
+    </div>
+</div>

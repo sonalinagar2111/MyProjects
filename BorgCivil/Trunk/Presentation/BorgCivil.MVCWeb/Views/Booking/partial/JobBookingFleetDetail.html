@@ -1,0 +1,245 @@
+﻿<div class="inmodal">
+    <div class="modal-header text-center">
+        <!--<i class="fa fa-sliders color-success h-modal-icon"></i>-->
+        <h4 class="modal-title">Add Fleet Detail</h4>
+        <div class="clostbtn">
+            <button type="button" data-dismiss="modal" aria-label="Close" ng-click="mbfCtrl.hideCancel()"><img src="Content/images/closebtn.png" title="Close"></button>
+        </div>
+    </div>
+    <form ng-submit="mbfCtrl.manageFleetBooking()" novalidate>
+        <div class="modal-body">
+            <!--Form Content Start-->
+            <div class="bc-panel-white" ng-controller="StartDatepickerCtrl">
+                <div class="row clearfix">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Fleet</label>
+                            <select class="form-control" ng-change="mbfCtrl.fleetChange(false, mbfCtrl.attributes.BookingFleet.FleetTypeId)" ng-model="mbfCtrl.attributes.BookingFleet.FleetTypeId">
+                                <option value="">Select</option>
+                                <option value="{{item.FleetTypeId}}" ng-repeat="item in mbfCtrl.fleetTypeDropdownList">{{item.FleetTypeName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-if="mbfCtrl.fleetActionFrom === '' || mbfCtrl.fleetActionFrom === 'undefined'">
+                        <label>Fleet Booking Date &amp; Time<span class="text-danger">*</span></label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-controller="DateTimePickerCtrl">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon" ng-click="openCalendar()">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input type="text"
+                                               ng-click="openCalendar()"
+                                               tabindex="1"
+                                               id="dateTime"
+                                               ng-change="mbfCtrl.setMinEndDate();mbfCtrl.getFleetRegistrations()"
+                                               name="appointment_date"
+                                               class="form-control"
+                                               ng-model="mbfCtrl.attributes.BookingFleet.FleetBookingDateTime"
+                                               date-time-picker 
+                                               datetimepicker-options="{format:'DD-MM-YYYY hh:mm A'}"
+                                               required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-if="mbfCtrl.fleetActionFrom === '' || mbfCtrl.fleetActionFrom === 'undefined'">
+                        <label>End Date<span class="text-danger">*</span></label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-controller="DateTimePickerCtrl">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon" ng-click="mbfCtrl.openFleetToDateCalendar()">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input type="text"
+                                               tabindex="1"
+                                               id="fleetToDateTime"
+                                               ng-change="mbfCtrl.getFleetRegistrations()"
+                                               name="appointment_date"
+                                               class="form-control"
+                                               ng-model="mbfCtrl.attributes.BookingFleet.FleetBookingEndDate"
+                                               min-date="mbfCtrl.attributes.BookingFleet.FleetBookingDateTime"
+                                               date-time-picker
+                                               datetimepicker-options="{useCurrent:false,format:'DD-MM-YYYY hh:mm A'}"
+                                               required />
+                                    </div>
+
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="javascript:void(0)" ng-click="mbfCtrl.resetDateRange()" class="btn-primary btn go-btn" title="Reset Date">Reset</a>                                 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Work Type</label>
+                            <select name="" class="form-control" ng-model="mbfCtrl.attributes.BookingFleet.WorktypeId">
+                                <option value="">Select</option>
+                                <option value="{{item.Value}}" ng-repeat="item in mbfCtrl.workTypeDropdownList">{{item.Text}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>                                    
+                    <div class="col-md-3">
+                        <label>Shift</label>
+                        <div class="form-group">
+                            <ul class="list-inline inline-form-element">
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" icheck name="radioshift" ng-model="mbfCtrl.attributes.BookingFleet.IsDayShift" value="0" ng-checked="true"> Day</label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" icheck name="radioshift" ng-model="mbfCtrl.attributes.BookingFleet.IsDayShift" value="1"> AfterNoon</label></div>
+                                </li>
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" icheck name="radioshift" ng-model="mbfCtrl.attributes.BookingFleet.IsDayShift" value="2"> Night</label></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Wet Hire</label>
+                        <ul class="list-inline inline-form-element">
+                            <li>
+                                <div class="checkbox"><label class="p-l0"> <input type="radio" name="radiowet" ng-model="mbfCtrl.attributes.BookingFleet.Iswethire" value="true" icheck ng-checked="true"> Yes</label></div>
+                            </li>
+                            <li>
+                                <div class="checkbox"><label class="p-l0"> <input type="radio" name="radiowet" ng-model="mbfCtrl.attributes.BookingFleet.Iswethire" value="false" icheck> No</label></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Driver</label>
+                            <select name="" class="form-control" ng-model="mbfCtrl.attributes.BookingFleet.DriverId">
+                                <option value="">Select</option>
+                                <option value="{{item.DriverId}}" ng-repeat="item in mbfCtrl.driverDropdownList">{{item.DriverName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Registration Number / Description</label>
+                            <label>Full Available Fleets ( {{mbfCtrl.count}} )</label>
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in mbfCtrl.fleetRegistrationList.FullyAvailableFleet">
+                                    <div class="checkbox css-popover-trigger">
+                                        <div class="css-popover-content">
+                                            <div class="arrow"></div>
+                                            <p>Make: {{item.Make}}</p><p>Model:  {{item.Model}}</p><p>Year:  {{item.Year}}</p>
+                                        </div>
+                                        <label class="p-l0">
+                                            <input type="radio"
+                                                   icheck name="radioFleetRegistration"
+                                                   ng-model="mbfCtrl.attributes.BookingFleet.FleetRegistrationId"
+                                                   value="{{item.FleetRegistrationId}}"
+                                                   ng-change="mbfCtrl.fleetRegistrationChange(false, mbfCtrl.attributes.BookingFleet.FleetRegistrationId)"
+                                                  >
+                                            {{item.RegistrationNumber}}
+                                         </label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <label>Partial Available Fleets ( {{mbfCtrl.countPartial}} )</label>
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in mbfCtrl.fleetRegistrationList.PartiallyAvailableFleet">                                  
+                                    <div class="checkbox css-popover-trigger"> 
+                                        <div class="css-popover-content">
+                                            <div class="arrow"></div>
+                                            <p>Make: {{item.Make}}</p><p>Model:  {{item.Model}}</p><p>Year:  {{item.Year}}</p>
+                                            <div ng-if="item.PartiallyAvailable">
+                                                PartiallyAvailable: <p ng-repeat="available in item.PartiallyAvailable">
+                                                    {{available.FromDate| date :  "dd-MM-yyyy hh:mm a"}} To {{available.ToDate| date :  "dd-MM-yyyy hh:mm a"}}
+                                                </p>
+                                            </div>
+                                        </div>                                                                                  
+                                        <label class="p-l0">
+                                            <input type="radio"
+                                                    icheck name="radioFleetRegistration"
+                                                    ng-model="mbfCtrl.attributes.BookingFleet.FleetRegistrationId"
+                                                    value="{{item.FleetRegistrationId}}"
+                                                    ng-change="mbfCtrl.fleetRegistrationChange(false, mbfCtrl.attributes.BookingFleet.FleetRegistrationId)"
+                                                    ng-disabled="(item.PartiallyAvailable.length>0)">
+                                            {{item.RegistrationNumber}}
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <!--<ul class="list-inline inline-form-element">
+                                <li ng-repeat="item in mbfCtrl.fleetRegistrationDropdownList">
+
+                                    <div class="checkbox"><label class="p-l0"> <input type="radio" icheck name="radioshift" ng-model="mbfCtrl.attributes.BookingFleet.FleetRegistrationId" value="{{item.FleetRegistrationId}}"> {{item.RegistrationNumber}}http://localhost:1234/#/booking/WorkAllocation</label></div>
+                                </li>                               
+                            </ul>
+                            <select name="" class="form-control" ng-change="mbfCtrl.fleetRegistrationChange(false, mbfCtrl.attributes.BookingFleet.FleetRegistrationId)" ng-model="mbfCtrl.attributes.BookingFleet.FleetRegistrationId">
+                                <option value="">Select</option>
+                                <option value="{{item.FleetRegistrationId}}" ng-repeat="item in mbfCtrl.fleetRegistrationDropdownList">{{item.RegistrationNumber}}</option>
+                            </select>-->
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <div class="form-group">
+                            <label>Attachments</label>
+                            <ul class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in mbfCtrl.attachementList.Attachments">
+                                    <div class="checkbox"><label class="p-l0"> <input icheck type="checkbox" ng-model="mbfCtrl.check[item.AttachmentId]" class="i-checks"> {{item.AttachmentTitle}} </label></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <div class="form-group">
+                            <label>Combo Hire</label>
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li ng-repeat="item in mbfCtrl.attachementList.ComboHire">
+                                    <div class="checkbox"><label class="p-l0"> <input icheck type="checkbox" id="{{item.AttachmentId}}" ng-model="mbfCtrl.check[item.AttachmentId]" class="i-checks"> {{item.AttachmentTitle}} </label></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-if="mbfCtrl.show">
+                    <div class="col-md-11">
+                        <div class="form-group">
+                            <ul id="ulCheckList" class="list-inline attachment-list inline-form-element">
+                                <li>
+                                    <div class="checkbox"><label class="p-l0"> <input icheck type="checkbox" ng-model="mbfCtrl.attributes.BookingFleet.IsfleetCustomerSite" value="true" class="i-checks"> Is fleet at customer’s site? </label></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Notes For Driver<span class="text-danger">*</span></label>
+                            <textarea class="form-control" ng-model="mbfCtrl.attributes.BookingFleet.NotesForDrive" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-if="mbfCtrl.show">
+                        <div class="form-group">
+                            <label>Reason</label>
+                            <textarea class="form-control" ng-model="mbfCtrl.attributes.BookingFleet.Reason"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Form Content End-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="mbfCtrl.hideCancel()" title="Close">Close</button>
+            <button type="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+        </div>
+    </form>
+</div>

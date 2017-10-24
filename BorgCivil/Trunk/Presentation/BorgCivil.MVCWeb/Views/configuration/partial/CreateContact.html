@@ -1,0 +1,76 @@
+﻿<div class="inmodal contactdetails">
+    <div class="modal-header text-center">
+        <!--<i class="fa fa-sliders color-success h-modal-icon"></i>-->
+        <h4 class="modal-title"> Contact Details</h4>
+        <div class="clostbtn">
+            <button type="button" ng-click="mgCtrl.hideCancel()" title="Close"><img src="Content/images/closebtn.png"></button>
+        </div>
+    </div>
+    <form name="contactDetailForm" ng-submit="mgCtrl.saveContact()" novalidate>
+        <div class="modal-body">
+            <div ng-if="mgCtrl.fromGateList">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Customer</label>
+                        <div class="form-group">
+                            <select ng-model="mgCtrl.customer" name="customer" class="form-control" ng-required="true" ng-options="item.CustomerName for item in mgCtrl.customerList track by item.CustomerId" ng-change="mgCtrl.changeCustomer(glCtrl.customer.CustomerId);">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Site</label>
+                        <div class="form-group">
+                            <select ng-model="mgCtrl.site" name="site" class="form-control" ng-required="true" ng-options="item.SiteName for item in mgCtrl.siteList track by item.SiteId" ng-change="mgCtrl.changeSite(glCtrl.site.SiteId);">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Gate</label>
+                        <div class="form-group">
+                            <select ng-model="mgCtrl.gate" name="site" class="form-control" ng-required="true" ng-options="item.GateName for item in mgCtrl.gateList track by item.GateId">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Contact <span class="text-danger"> *</span></label>
+                        <input class="form-control only-float" type="text" ng-model="mgCtrl.contactAttributes.ContactPerson" ng-maxlength="50" ng-minlength="2" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Email Address <span class="text-danger"> *</span></label>
+                        <input class="form-control only-float" type="email" ng-model="mgCtrl.contactAttributes.Email" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Mobile Number <span class="text-danger"> *</span></label>
+                        <input class="form-control only-float"type="number" ng-model="mgCtrl.contactAttributes.MobileNumber" ng-maxlength="10" ng-minlength="10" required min="0">
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" title="Close" ng-click="mgCtrl.hideCancel()">Close</button>
+            <button type="submit" class="btn btn btn-primary" data-dismiss="modal" title="Update" ng-if="mgCtrl.contactAttributes.GateContactPersonId">Update</button>
+            <button type="submit" class="btn btn btn-primary" data-dismiss="modal" title="Save" ng-if="!mgCtrl.contactAttributes.GateContactPersonId">Save</button>
+        </div>
+    </form>
+</div>
+

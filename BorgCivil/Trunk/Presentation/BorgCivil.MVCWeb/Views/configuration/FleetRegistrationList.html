@@ -1,0 +1,25 @@
+﻿<div class="row right-btn-group clearfix custom-btn-pos">
+    <div class="col-md-12">
+        <div class="text-right">
+            <a href="javascript:void(0);" ui-sref="configuration.AddFleetRegistration()" class="btn btn-primary btn-i"><i class="fa fa-plus"></i>Add New Fleet</a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div ng-controller="FleetRegistrationListCtrl as frlCtrl">
+    <!--Fleet Registration List Content-->
+    <div>
+        <div id="grid"
+             ui-grid="frlCtrl.uiGrid"
+             ui-grid-move-columns
+             ui-grid-pagination
+             ui-grid-resize-columns
+             ui.grid.autoResize
+             external-scopes="clickHandler"
+             class="grid">
+            <div class="watermark" ng-show="!frlCtrl.uiGrid.data.length">No records found</div>
+        </div>
+    </div>
+
+    <!-- Fleet Registration List  Content End-->           
+</div>

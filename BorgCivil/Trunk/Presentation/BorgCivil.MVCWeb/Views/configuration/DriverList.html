@@ -1,0 +1,23 @@
+﻿<div class="text-right m-b20 custom-btn-pos">
+    <a href="javascript:void(0);" ui-sref="configuration.AddDriver()" class="btn btn-primary btn-i"><i class="fa fa-plus"></i>Add Driver</a>
+</div>
+
+<div class="animate-panel bookinglist" ng-controller="DriverListCtrl as dlCtrl">
+
+    <!--Docket Content-->
+    <div>
+        <div id="grid"
+             ui-grid="dlCtrl.uiGrid"            
+             ui-grid-move-columns
+             ui-grid-pagination
+             ui-grid-resize-columns
+             ui.grid.autoResize
+             external-scopes="clickHandler"
+             class="grid">
+            <div class="watermark" ng-show="!dlCtrl.uiGrid.data.length">No records found</div>
+        </div>
+    </div>
+
+    <!-- Docket Content End-->
+
+</div>

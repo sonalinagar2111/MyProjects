@@ -1,0 +1,134 @@
+﻿<div class="animate-panel customerdashbord" ng-controller="CustomerDashboardCtrl as cdCtrl">
+    <div class="hpanel hpanel-box">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="booking-details left-heading">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td><b>Customer Name:</b> {{cdCtrl.customerName}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a ui-sref="configuration.AddSite({CustomerId: cdCtrl.customerId})"
+                       target="_blank"
+                       class="btn btn-primary btn-i"
+                       title="Add New Site">
+                        <i class="fa fa-plus"></i>
+                        Add New Site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bc-panel-white">
+        <div class="row clearfix">
+            <!--Site Content-->
+            <div class="col-md-4 customer-dashbord m-b-lg"
+                 ng-repeat="sitelist in cdCtrl.customerSiteList">
+                <div class="hpanel hgreen contact-panel">
+                    <div class="panel-body">
+                        <a ui-sref="configuration.EditSite({SiteId: sitelist.SiteId,CheckPage: '1'})"
+                           class="edit-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <!--<h3><a ui-sref="booking.CustomerSiteBooking({CustomerId:sitelist.CustomerId,SiteId:sitelist.SiteId,Status:0})"
+                               target="_blank">{{sitelist.SiteName}}
+                            </a>
+                        </h3>-->
+                        <h3>
+                            <span>{{sitelist.SiteName}}</span>
+                        </h3>
+                    </div>
+                    <div class="panel-footer contact-footer">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            title="Booked In">
+                                        Booked In  <b class="caret"></b>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="javascript:void(0)"
+                                           ng-repeat="list in sitelist.BookedIn"
+                                           ui-sref="booking.CustomerBookingList({CustomerId: sitelist.CustomerId,
+                                                                                        FleetTypeId: list.Id,
+                                                                                        StatusValue: 2,
+                                                                                        FromDate: cdCtrl.currentDate,
+                                                                                        ToDate: cdCtrl.currentDate})"
+                                           target="_blank"
+                                           class="dropdown-item"
+                                           ng-if="sitelist.BookedIn.length > 0">
+                                            {{ list.Fleet }} ({{ list.Count }})
+                                        </a>
+                                        <a href="javascript:void(0)"
+                                           class="dropdown-item"
+                                           ng-if="sitelist.BookedIn.length <= 0">
+                                            No Data
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-success btn-sm dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            title="Allocated">
+                                        Allocated  <b class="caret"></b>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="javascript:void(0)"
+                                           ng-repeat="list in sitelist.Allocated"
+                                           ui-sref="booking.CustomerBookingList({CustomerId: sitelist.CustomerId,
+                                                                                        FleetTypeId: list.Id,
+                                                                                        StatusValue:3,
+                                                                                        FromDate: cdCtrl.currentDate,
+                                                                                        ToDate: cdCtrl.currentDate})"
+                                           target="_blank"
+                                           class="dropdown-item"
+                                           ng-if="sitelist.Allocated.length > 0">
+                                            {{ list.Fleet }} ({{ list.Count }})
+                                        </a>
+                                        <a href="javascript:void(0)"
+                                           class="dropdown-item"
+                                           ng-if="sitelist.Allocated.length <= 0">
+                                            No Data
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm"
+                                            aria-expanded="false"
+                                            title="New Job"
+                                            ng-click="cdCtrl.addNewJob(sitelist.SiteId)">
+                                        New Job
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="btn-group pull-right">
+                                    <a ui-sref="booking.CurrentCustomerSiteBookingList({CustomerId:sitelist.CustomerId,
+                                                                                        SiteId:sitelist.SiteId,
+                                                                                        FromDate: cdCtrl.currentDate,
+                                                                                        ToDate: cdCtrl.currentDate})"
+                                       title="Calendar"
+                                       class="btn btn-default btn-sm"
+                                       target="_blank">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Site Content-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿<div ng-controller="ManageCustomerBookingListCtrl as cblCtrl" class="workallocation">   
+    <div>
+        <div class="hpanel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="booking-details left-heading">
+                            <table cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Customer Name:</b> {{cblCtrl.customerFleetByStatusList.CustomerName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Date range for listing-->
+        <div class="clearfix">
+            <div class="bc-panel-white clearfix" ng-controller="StartDatepickerCtrl">
+                <div class="col-md-8 p-l0">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>From Date</label>
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY" ng-click="startDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false" ng-model="cblCtrl.attributes.FromDate" is-open="popup1.opened"
+                                           max-date="cblCtrl.attributes.ToDate" datepicker-options="dateOptions"
+                                           ng-required="true" close-text="Close" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 p-l0">
+                            <label>To Date</label>
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="endDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY" ng-click="endDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false" ng-model="cblCtrl.attributes.ToDate" is-open="popup2.opened"
+                                           min-date="cblCtrl.attributes.FromDate"
+                                           max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                           ng-required="true" close-text="Close" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 p-l0">
+                            <a href="javascript:void(0)" ng-click="cblCtrl.getBookingList()" class="btn-primary btn go-btn" title="GO">GO</a>
+                            <a href="javascript:void(0)" ng-click="cblCtrl.resetFilterDate()" class="btn-primary btn go-btn" title="RESET">RESET</a>
+                            <div ng-if="cblCtrl.dateRangeError">
+                                <span class="has-error"> Both date are required.</span>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Customer Booking List Content -->
+        <div>
+            <div id="grid"
+                 ui-grid="cblCtrl.uiGrid"                
+                 ui-grid-exporter
+                 ui-grid-move-columns
+                 ui-grid-pagination
+                 ui-grid-resize-columns
+                 external-scopes="clickHandler"
+                 class="grid">
+                <div class="watermark" ng-show="!cblCtrl.uiGrid.data.length">No records found</div>
+            </div>
+        </div>
+        <!-- End Customer Booking List Content -->
+
+    </div>
+</div>
+<!--Tab End-->

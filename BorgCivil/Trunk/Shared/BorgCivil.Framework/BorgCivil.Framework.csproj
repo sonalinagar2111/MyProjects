@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{00785902-1EA3-47BE-AD19-CCC43E17C244}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BorgCivil.Framework</RootNamespace>
+    <AssemblyName>BorgCivil.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AnonymousField.cs" />
+    <Compile Include="Entities\Country.cs" />
+    <Compile Include="Entities\Docket.cs" />
+    <Compile Include="Entities\DocketCheckList.cs" />
+    <Compile Include="Entities\Document.cs" />
+    <Compile Include="Entities\DriverInductionCard.cs" />
+    <Compile Include="Entities\DriverVocCard.cs" />
+    <Compile Include="Entities\DriverWhiteCard.cs" />
+    <Compile Include="Entities\EmailSetting.cs" />
+    <Compile Include="Entities\EmailTemplate.cs" />
+    <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\Demo.cs" />
+    <Compile Include="Entities\Companies.cs" />
+    <Compile Include="Entities\BookingFleets.cs" />
+    <Compile Include="Entities\EmploymentCategory.cs" />
+    <Compile Include="Entities\FleetHistory.cs" />
+    <Compile Include="Entities\GateContactPerson.cs" />
+    <Compile Include="Entities\LicenseClass.cs" />
+    <Compile Include="Entities\Gate.cs" />
+    <Compile Include="Entities\LoadDocket.cs" />
+    <Compile Include="Entities\SentEmail.cs" />
+    <Compile Include="Entities\State.cs" />
+    <Compile Include="Entities\StatusLookup.cs" />
+    <Compile Include="Entities\BookingSiteGates.cs" />
+    <Compile Include="Entities\BookingSiteSupervisor.cs" />
+    <Compile Include="Entities\Booking.cs" />
+    <Compile Include="Entities\DriversFleetsMapping.cs" />
+    <Compile Include="Entities\Drivers.cs" />
+    <Compile Include="Entities\FleetsRegistration.cs" />
+    <Compile Include="Entities\Fleets.cs" />
+    <Compile Include="Entities\Attachments.cs" />
+    <Compile Include="Entities\FleetTypes.cs" />
+    <Compile Include="Entities\WorkTypes.cs" />
+    <Compile Include="Entities\Supervisor.cs" />
+    <Compile Include="Entities\Sites.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Identity\AppIdentityDbContext.cs" />
+    <Compile Include="Identity\AppIdentityDbInitializer.cs" />
+    <Compile Include="Identity\ApplicationRole.cs" />
+    <Compile Include="Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Identity\ApplicationUser.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Identity\Roles.cs" />
+    <Compile Include="Identity\UserAccount.cs" />
+    <Compile Include="Migrations\201702281156352_createDB.cs" />
+    <Compile Include="Migrations\201702281156352_createDB.Designer.cs">
+      <DependentUpon>201702281156352_createDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702281318110_addedTables.cs" />
+    <Compile Include="Migrations\201702281318110_addedTables.Designer.cs">
+      <DependentUpon>201702281318110_addedTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703081207390_AddedCompanyTable.cs" />
+    <Compile Include="Migrations\201703081207390_AddedCompanyTable.Designer.cs">
+      <DependentUpon>201703081207390_AddedCompanyTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703081301401_AddedFkInCustomer.cs" />
+    <Compile Include="Migrations\201703081301401_AddedFkInCustomer.Designer.cs">
+      <DependentUpon>201703081301401_AddedFkInCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703081305017_AddedFkRelationship.cs" />
+    <Compile Include="Migrations\201703081305017_AddedFkRelationship.Designer.cs">
+      <DependentUpon>201703081305017_AddedFkRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703091350253_addDemoTable.cs" />
+    <Compile Include="Migrations\201703091350253_addDemoTable.Designer.cs">
+      <DependentUpon>201703091350253_addDemoTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703201202180_AddedEmployeeAnd.cs" />
+    <Compile Include="Migrations\201703201202180_AddedEmployeeAnd.Designer.cs">
+      <DependentUpon>201703201202180_AddedEmployeeAnd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703201320346_addIsdeletedColumn.cs" />
+    <Compile Include="Migrations\201703201320346_addIsdeletedColumn.Designer.cs">
+      <DependentUpon>201703201320346_addIsdeletedColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BorgCivil.Utils\BorgCivil.Utils.csproj">
+      <Project>{142584c5-62a3-4ec0-8fb1-c8d13cc929a3}</Project>
+      <Name>BorgCivil.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702281156352_createDB.resx">
+      <DependentUpon>201702281156352_createDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702281318110_addedTables.resx">
+      <DependentUpon>201702281318110_addedTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703081207390_AddedCompanyTable.resx">
+      <DependentUpon>201703081207390_AddedCompanyTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703081301401_AddedFkInCustomer.resx">
+      <DependentUpon>201703081301401_AddedFkInCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703081305017_AddedFkRelationship.resx">
+      <DependentUpon>201703081305017_AddedFkRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703091350253_addDemoTable.resx">
+      <DependentUpon>201703091350253_addDemoTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703201202180_AddedEmployeeAnd.resx">
+      <DependentUpon>201703201202180_AddedEmployeeAnd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703201320346_addIsdeletedColumn.resx">
+      <DependentUpon>201703201320346_addIsdeletedColumn.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

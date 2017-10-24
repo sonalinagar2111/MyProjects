@@ -1,0 +1,5 @@
+D:\working\BorgCivil\Trunk\Shared\BorgCivil.Utils\bin\Debug\BorgCivil.Utils.dll
+D:\working\BorgCivil\Trunk\Shared\BorgCivil.Utils\bin\Debug\BorgCivil.Utils.pdb
+D:\working\BorgCivil\Trunk\Shared\BorgCivil.Utils\obj\Debug\BorgCivil.Utils.dll
+D:\working\BorgCivil\Trunk\Shared\BorgCivil.Utils\obj\Debug\BorgCivil.Utils.pdb
+D:\working\BorgCivil\Trunk\Shared\BorgCivil.Utils\obj\Debug\BorgCivil.Utils.csprojResolveAssemblyReference.cache

@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "LinkedIn Helper",
+  "short_name": "LinkedIn Helper",
+  "version": "1.0",
+
+  "description": "LinkedIn Helper",
+
+  "author": "Sonali Nagar",
+
+  "browser_action": {
+    "default_icon": {
+      "19": "checked.png",
+      "38": "checked.png"
+    },
+    "default_title": "LinkedIn Helper",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      // "css": ["style.css"],
+      "js": ["common.js"]
+    }
+  ],
+
+  "permissions": [
+     "activeTab"
+  ]
+}

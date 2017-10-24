@@ -1,0 +1,111 @@
+﻿
+<div ng-controller="TabCtrl" class="workallocation">
+    <!--Search Filter-->
+    <div class="row right-btn-group clearfix">
+        <div class="col-md-12">
+            <div class="btn-group pull-right ">
+                <button type="button" class="btn btn-default" title="PDF"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</button>
+                <button type="button" class="btn btn-default" title="Excel"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</button>
+                <button type="button" class="btn btn-default" title="Print"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+                <!--<button type="button" class="btn btn-default" title="Email"><i class="fa fa-envelope" aria-hidden="true"></i> Email</button>-->
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--Search Filter-->
+    <div ng-controller="ManageCutomerSiteBookingListCtrl as csblCtrl">
+        <div class="hpanel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="booking-details left-heading">
+                            <table cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Customer Name:</b> {{csblCtrl.customerSiteDetail.CustomerName}}</td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td><b>Site Details:</b> {{csblCtrl.customerSiteDetail.SiteName}}</td>
+                                    </tr>                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Date range for listing-->
+        <div class="clearfix">
+            <div class="bc-panel-white clearfix" ng-controller="StartDatepickerCtrl">
+                <div class="col-md-5 p-l0">
+                    <div class="row">
+                        <div class="col-md-5 ">
+                            <label>From Date</label>
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="startDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY" ng-click="startDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false" ng-model="csblCtrl.attributes.FromDate" is-open="popup1.opened"
+                                           max-date="blCtrl.attributes.ToDate" datepicker-options="dateOptions"
+                                           ng-required="true" close-text="Close" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 p-l0">
+                            <label>To Date</label>
+                            <div class="form-group">
+                                <div class="input-group date-picker">
+                                    <span class="input-group-addon" ng-click="endDate()">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                    <input placeholder="DD-MM-YYYY" ng-click="endDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           show-button-bar="false" ng-model="csblCtrl.attributes.ToDate" is-open="popup2.opened"
+                                           min-date="blCtrl.attributes.FromDate"
+                                           max-date="'{{maxDate}}'" datepicker-options="dateOptions"
+                                           ng-required="true" close-text="Close" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 p-l0">
+                            <a href="javascript:void(0)" ng-click="csblCtrl.getCustomerSiteBookingList()" class="btn-primary btn go-btn" title="GO">GO</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-tb-panel clearfix">
+            <table ng-table="csblCtrl.bcaTableParams" class="table table-stripped toggle-arrow-tiny table-hover">
+                <tr ng-repeat="item in $data" ng-if="$data.length > 0">
+                    <td title="'Driver Name'" filter="{ DriverName: 'text'}" sortable="'DriverName'" class="text-center">{{item.DriverName}}</td>
+                    <td title="'Fleet Number'" filter="{ FleetNumber: 'number'}" sortable="'FleetNumber'" class="text-center">{{item.FleetNumber}}}}</td>
+                    <td title="'Job Type'" filter="{ WorkType: 'text'}" sortable="'WorkType'">{{item.WorkType}}</td>
+                    <td title="'Material'" filter="{ Material: 'text'}" sortable="'Material'">{{item.Material}}</td>
+                    <td title="'Docket'" filter="{ Docket: 'number'}" sortable="'Docket'" class="text-center">{{item.Docket}}</td>
+                    <td title="'Booking Number'" filter="{ BookingNumber: 'number'}" sortable="'BookingNumber'" class="text-center">{{item.BookingNumber}}</td>
+                    <td title="'Status'" filter="{ Status: 'test'}" sortable="'Status'" class="text-center">{{item.Status}}</td>
+                    <td title="'Action'" align="center" nowrap="true" width="1%">
+                        <div class="btn-group">
+                            <a class="dropdown-toggle" id="dLabel" href="javascript:void(0);" data-toggle="dropdown">
+                                <i class="fa pe-7s-more action-icon" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu hdropdown notification dropdown-menu-right" role="menu">
+                                <li><a href="javascript:void(0)"><i class="fa pe-7s-file" aria-hidden="true"></i>  Allocation</a></li>
+                                <li><a href="javascript:void(0)"><i class="fa pe-7s-copy-file" aria-hidden="true"></i>  Duplicate</a></li>
+                                <li><a href="javascript:void(0)"><i class="fa pe-7s-trash" aria-hidden="true"></i> Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr ng-if="$data.length <= 0">
+                    <td colspan="6" class="text-center">No records found</td>
+                </tr>
+            </table>
+        </div>       
+    </div>
+</div>
+<!--Tab End-->

@@ -1,0 +1,38 @@
+﻿<div class="inmodal contactdetails">
+    <div class="modal-header text-center">
+        <!--<i class="fa fa-sliders color-success h-modal-icon"></i>-->
+        <h4 class="modal-title">Tax Details</h4>
+        <div class="clostbtn">
+            <button type="button" ng-click="tCtrl.hideCancel()" title="Close"><img src="Content/images/closebtn.png"></button>
+        </div>
+    </div>
+    <form name="contactDetailForm" ng-submit="tCtrl.saveTax()" novalidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tax Type <span class="text-danger"> *</span></label>
+                        <input class="form-control only-float" name="" type="text" ng-model="tCtrl.taxType" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Rate <span class="text-danger"> *</span></label>
+                        <input class="form-control only-float" name="rate" type="number" ng-model="tCtrl.rate" ng-pattern="/^([0-9]{1,5})(([.]{1})([0-9]{1,2}))?$/" min="0" required>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="contactDetailForm.rate.$invalid && !contactDetailForm.rate.$pristine && !contactDetailForm.rate.$error.required ">
+                <span class="has-error"> This field is invalid.</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" title="Close" ng-click="tCtrl.hideCancel()">Close</button>
+            <button type="submit" class="btn btn btn-primary" data-dismiss="modal" title="Update" ng-if="tCtrl.taxId">Update</button>
+            <button type="submit" class="btn btn btn-primary" data-dismiss="modal" title="Save" ng-if="!tCtrl.taxId">Save</button>
+        </div>
+    </form>
+</div>
+
